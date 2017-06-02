@@ -3,7 +3,6 @@ The ROT13 function is to shift the characters 13 to the left. i.e. ROT13('a') =>
 Apply the function twice to revert back to plaintext.
 *******/
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
