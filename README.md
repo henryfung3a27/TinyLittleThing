@@ -1,2 +1,2 @@
 # TinyLittleThing
-Programs that was just made for fun
+Programs that was made just for fun
