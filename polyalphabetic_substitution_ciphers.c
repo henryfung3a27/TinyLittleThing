@@ -1,4 +1,14 @@
-// Work with lowercase plaintext and pad input only
+/*******
+
+ Date: 28/6/2017
+ This program is written for fun only. 
+ It accepts a text string and a pad as arguments. It outputs both cases when the user wants
+ to encrypt or decrypt the text string with the pad.
+ 
+ Further dev.: accept a file as an argument and output a new file with all characters encryped
+ 					or decryped with the pad provided.
+ 
+ *******/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,17 +71,31 @@ char* de(char* inp, char* _pad) {
 	return ret;
 }
 
-int main(void) {
-	char* p = "apple banana cipher dounut elephant flint";
-	char* pad = "QWERTY";
+void display_msg() {
+	printf("Usage: polyalphabetic_substitution_ciphers <plaintext/encrypted text> <pad>\n");
+	printf("e.g.\n$ polyalphabetic_substitution_ciphers \"This is a test string\" \"pad\"\n");
+	printf("Input text: This is a test string\n");
+	printf("Encryption: %s\n", en("This is a test string", "pad"));
+	printf("Decryption: %s\n", de("This is a test string", "pad"));
+	printf("\nThe text and pad is case insensitive\n");
+}
+
+int main(int argc, char* argv[]) {
+	printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n");
 	
-	printf("before = %s\nafter  = %s\n", p, en(p, pad));
-	// before = apple banana cipher dounut elephant flint
-	// after  = rmudy arkffu bzmmwl cfrsmn dcbuzumk cqahs
+	if (argc == 1) {
+		display_msg();
+		exit(1);
+	}
 	
-	printf("after  = %s\n", de(en(p, pad), pad));
+	if (argc != 3) {
+		printf("You did not input enough information or you inputted too much.\n");
+		exit(1);
+	}
 	
-	//printf("\nbefore:|%s|\nafter :|%s|\n", p, to_upper_case(p));
+	printf("Input text: %s\n", argv[1]);
+	printf("Encryption: %s\n", en(argv[1], argv[2]));
+	printf("Decryption: %s\n", de(argv[1], argv[2]));
 	
 	return 0;
 }
