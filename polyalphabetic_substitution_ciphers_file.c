@@ -3,7 +3,13 @@
  Date: 29/6/2017
  This program is written for fun only.
  It accepts a text file and a pad as arguments. It outputs a new file with all characters
- encrypted or decrypted with the pad provided.
+ encrypted or decrypted with the pad provided. Encryption and decryption are done in the
+ same program, decided by the parameter. The output of the program will be in the format
+ of <input_file_name>_output(.<file_extension>).
+ Only encrypt and decrypt English alphabets.
+ 
+ Usage: polyalphabetic_substitution_ciphers_file <file_name> <pad> <e/d>
+        e -> encryption   d -> decryption
 
  *******/
 
@@ -75,8 +81,9 @@ char* de(char* inp, char* _pad) {
 }
 
 void display_msg() {
-	printf("Usage: polyalphabetic_substitution_ciphers_file <filename> <pad>\n");
-	printf("e.g.\n$ polyalphabetic_substitution_ciphers \"C:\\users\\Tom\\Desktop\\test.txt\" \"pad\"\n");
+	printf("Usage: polyalphabetic_substitution_ciphers_file <filename> <pad> <e/d>\n");
+	printf("e -> encrypt\td -> decrypt\n");
+	printf("e.g.\n$ polyalphabetic_substitution_ciphers_file ~/Documents/test myPad e\n");
 }
 
 int main(int argc, char* argv[]) {
@@ -87,31 +94,29 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 	
-	if (argc != 3) {
+	if (argc != 4) {
 		printf("You did not input enough information or you inputted too much.\n");
+		printf("For more information, run without parameters\n");
 		exit(1);
 	}
 	
+	// Create output file name //
 	char output_path[256] = "";
-	char temp[256] = "";
+	char ext[256] = "";
 	strcpy(output_path, argv[1]);
-	char* token;
-	if (strchr(output_path, '.')) {
-		token = strtok(output_path, ".");
+	if (strchr(output_path, '.')) {		// If the file has file extension
+		char* token = strtok(output_path, ".");
 		sprintf(output_path, "%s", token);
 		token = strtok(NULL, ".");
-		strcpy(temp, token);
+		strcpy(ext, token);
 		strcat(output_path, "_output");
 		strcat(output_path, ".");
-		strcat(output_path, temp);
+		strcat(output_path, ext);
+		free(token);
 	}
 	else
 		sprintf(output_path, "%s_output", argv[1]);
-
-	
-	printf("output_path=%s\n", output_path);
-	
-	
+	/*************************/
 	
 	FILE *fp = fopen(argv[1], "r");
 	FILE *op = fopen(output_path, "w");
@@ -127,10 +132,22 @@ int main(int argc, char* argv[]) {
 	
 	char* get = malloc(1024 * sizeof(char));
 	
-	while (fgets(get, 1024, fp)) {
-		fprintf(op, "%s", en(get, argv[2]));
+	if (argv[3][0] == 'e') {
+		while (fgets(get, 1024, fp))
+			fprintf(op, "%s", en(get, argv[2]));
+		printf("Encryption success.\n");
+		printf("Output: %s\n", output_path);
 	}
+	else if (argv[3][0] == 'd') {
+		while (fgets(get, 1024, fp))
+			fprintf(op, "%s", de(get, argv[2]));
+		printf("Decryption success.\n");
+		printf("Output: %s\n", output_path);
+	}
+	else
+		printf("Please enter 'e' for encryption or 'd' for decryption.\n");
 	
+	free(get);
 	fclose(fp);
 	fclose(op);
 	
