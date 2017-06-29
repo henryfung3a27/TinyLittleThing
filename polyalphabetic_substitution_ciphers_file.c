@@ -1,13 +1,10 @@
 /*******
 
- Date: 28/6/2017
- This program is written for fun only. 
- It accepts a text string and a pad as arguments. It outputs both cases when the user wants
- to encrypt or decrypt the text string with the pad.
- 
- Further dev.: accept a file as an argument and output a new file with all characters encryped
- 					or decryped with the pad provided.
- 
+ Date: 29/6/2017
+ This program is written for fun only.
+ It accepts a text file and a pad as arguments. It outputs a new file with all characters
+ encrypted or decrypted with the pad provided.
+
  *******/
 
 #include <stdio.h>
@@ -95,11 +92,43 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 	
+	char output_path[256];
+	char temp[256];
+	strcpy(output_path, argv[1]);
+	char* token = strtok(output_path, ".");
+	sprintf(output_path, "%s", token);
+	//token = strtok(NULL, ".");
+	//strcat(output_path, "_output");
+	if (token = strtok(NULL, ".")) {
+		//strcat(output_path, ".");
+		//strcat(output_path, temp);
+		strcpy(temp, token);
+	}
+	strcat(output_path, "_output");
+	if (temp[0]) {
+		strcat(output_path, ".");
+		strcat(output_path, temp);
+	}
+	
+	
+	printf("output_path=%s\n", output_path);
+	
+	
+	
 	FILE *fp = fopen(argv[1], "r");
+	
+	
 	if (!fp) {
 		printf("The file cannot be opened.\n");
 		exit(1);
 	}
+	
+	char* get = malloc(1024 * sizeof(char));
+	
+	//while (fgets(get, 1024, fp) != NULL) {
+		
+	
+	fclose(fp);
 	
 	return 0;
 }
