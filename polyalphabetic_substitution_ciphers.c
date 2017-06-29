@@ -44,6 +44,9 @@ char* en(char* inp, char* _pad) {
 		ret[i] = c;
 		k = (k + 1) % strlen(pad);
 	}
+	
+	free(plaintext);
+	free(pad);
 	return ret;
 }
 
@@ -68,6 +71,9 @@ char* de(char* inp, char* _pad) {
 		ret[i] = c;
 		k = (k + 1) % strlen(pad);
 	}
+	
+	free(plaintext);
+	free(pad);
 	return ret;
 }
 
