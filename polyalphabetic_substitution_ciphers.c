@@ -32,8 +32,8 @@ char* en(char* inp, char* _pad) {
 	char* pad = to_upper_case(_pad);
 	
 	for (; plaintext[i]; i++) {
-		if (plaintext[i] == ' ') {
-			ret[i] = ' ';
+		if (!isalpha(plaintext[i])) {
+			ret[i] = plaintext[i];
 			continue;
 		}
 		
@@ -55,8 +55,8 @@ char* de(char* inp, char* _pad) {
 	char* pad = to_upper_case(_pad);
 	
 	for (; plaintext[i]; i++) {
-		if (plaintext[i] == ' ') {
-			ret[i] = ' ';
+		if (!isalpha(plaintext[i])) {
+			ret[i] = plaintext[i];
 			continue;
 		}
 		
