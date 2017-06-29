@@ -92,43 +92,47 @@ int main(int argc, char* argv[]) {
 		exit(1);
 	}
 	
-	char output_path[256];
-	char temp[256];
+	char output_path[256] = "";
+	char temp[256] = "";
 	strcpy(output_path, argv[1]);
-	char* token = strtok(output_path, ".");
-	sprintf(output_path, "%s", token);
-	//token = strtok(NULL, ".");
-	//strcat(output_path, "_output");
-	if (token = strtok(NULL, ".")) {
-		//strcat(output_path, ".");
-		//strcat(output_path, temp);
+	char* token;
+	if (strchr(output_path, '.')) {
+		token = strtok(output_path, ".");
+		sprintf(output_path, "%s", token);
+		token = strtok(NULL, ".");
 		strcpy(temp, token);
-	}
-	strcat(output_path, "_output");
-	if (temp[0]) {
+		strcat(output_path, "_output");
 		strcat(output_path, ".");
 		strcat(output_path, temp);
 	}
-	
+	else
+		sprintf(output_path, "%s_output", argv[1]);
+
 	
 	printf("output_path=%s\n", output_path);
 	
 	
 	
 	FILE *fp = fopen(argv[1], "r");
-	
+	FILE *op = fopen(output_path, "w");
 	
 	if (!fp) {
 		printf("The file cannot be opened.\n");
 		exit(1);
 	}
+	if (!op) {
+		printf("The output file cannot be created.\n");
+		exit(1);
+	}
 	
 	char* get = malloc(1024 * sizeof(char));
 	
-	//while (fgets(get, 1024, fp) != NULL) {
-		
+	while (fgets(get, 1024, fp)) {
+		fprintf(op, "%s", en(get, argv[2]));
+	}
 	
 	fclose(fp);
+	fclose(op);
 	
 	return 0;
 }
