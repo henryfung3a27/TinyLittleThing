@@ -1,12 +1,12 @@
 /*******
 
  Date: 28/6/2017
- This program is written for fun only. 
+ This program is written for fun only.
  It accepts a text string and a pad as arguments. It outputs both cases when the user wants
  to encrypt or decrypt the text string with the pad.
  
  Further dev.: accept a file as an argument and output a new file with all characters encryped
- 					or decryped with the pad provided.
+               or decryped with the pad provided.
  
  *******/
 
